@@ -16,7 +16,7 @@ public class CheckResultHandler {
 
     private static final int FAILURE_THRESHOLD = 3;
 
-    private void handle(CheckResultEvent checkResultEvent) {
+    public void handle(CheckResultEvent checkResultEvent) {
         if (!endpointHealthStateRepository.existsByEndpointId(checkResultEvent.endpointId())) {
             EndpointHealthState endpointHealthState = new EndpointHealthState();
             endpointHealthState.setEndpointId(checkResultEvent.endpointId());
@@ -37,18 +37,15 @@ public class CheckResultHandler {
         EndpointHealthState endpointHealthState = endpointHealthStateRepository.findByEndpointId(result.endpointId())
                 .orElseThrow(() -> new RuntimeException("EndpointHealthState not found by id"));
 
-        if ("DOWN".equals(result.status())) {
-            endpointHealthState.setCounter(FAILURE_THRESHOLD);
-            endpointHealthStateRepository.save(endpointHealthState);
-        }
-
-        int counter = endpointHealthState.getCounter() + 1;
-        if (counter >= FAILURE_THRESHOLD) {
+        int counter = Math.min(endpointHealthState.getCounter() + 1,
+                                FAILURE_THRESHOLD);
+        if (counter == FAILURE_THRESHOLD
+                && endpointHealthState.getStatus() != EndpointStatus.DOWN) {
             endpointHealthState.setStatus(EndpointStatus.DOWN);
-            incidentService.openIncident(endpointHealthState);
+            incidentService.openIncident(endpointHealthState, result);
         }
 
-        endpointHealthState.setCounter(FAILURE_THRESHOLD);
+        endpointHealthState.setCounter(counter);
         endpointHealthStateRepository.save(endpointHealthState);
     }
 
@@ -56,19 +53,14 @@ public class CheckResultHandler {
         EndpointHealthState endpointHealthState = endpointHealthStateRepository.findByEndpointId(result.endpointId())
                 .orElseThrow(() -> new RuntimeException("EndpointHealthState not found by id"));
 
-        if ("DOWN".equals(result.status())) {
-            int counter = endpointHealthState.getCounter() - 1;
+        int counter = Math.max(endpointHealthState.getCounter() - 1, 0);
 
-            if (counter <= 0) {
-                counter = 0;
-                endpointHealthState.setStatus(EndpointStatus.UP);
-                incidentService.closeIncident(endpointHealthState);
-            }
-            endpointHealthState.setCounter(counter);
-            endpointHealthStateRepository.save(endpointHealthState);
+        if (endpointHealthState.getStatus() == EndpointStatus.DOWN && counter == 0) {
+            endpointHealthState.setStatus(EndpointStatus.UP);
+            incidentService.closeIncident(endpointHealthState);
         }
 
-        endpointHealthState.setCounter(0);
+        endpointHealthState.setCounter(counter);
         endpointHealthStateRepository.save(endpointHealthState);
     }
 }

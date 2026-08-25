@@ -31,7 +31,6 @@ public class IncidentEntity {
     private Integer statusCode;
     @Column(nullable = false)
     private Instant startedAt;
-    @Column(nullable = false)
     private Instant resolvedAt;
     @Column(length = 1000)
     private String errorMessage;
