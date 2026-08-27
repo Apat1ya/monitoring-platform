@@ -1,21 +1,24 @@
 package io.github.apat1ya.monitor.service;
 
 import event.CheckResultEvent;
-import lombok.RequiredArgsConstructor;
 import io.github.apat1ya.monitor.client.EndpointHttpClient;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointHttpResponse;
 import io.github.apat1ya.monitor.entity.EndpointEntity;
+import io.github.apat1ya.monitor.exception.EndpointNotFoundException;
+import io.github.apat1ya.monitor.repository.EndpointRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class EndpointCheckService {
-    private final EndpointService endpointService;
+    private final EndpointRepository endpointRepository;
     private final EndpointHttpClient endpointHttpClient;
     private final MonitorService monitorService;
 
     public void checkEndpoint(Long endpointId) {
-        EndpointEntity endpoint = endpointService.findById(endpointId);
+        EndpointEntity endpoint = endpointRepository.findById(endpointId)
+                .orElseThrow(() -> new EndpointNotFoundException ("Endpoint Not Found"));
         String url = monitorService.getBaseUrl(endpoint.getMonitorId()) + endpoint.getPath();
         EndpointHttpResponse response = endpointHttpClient.sendRequest(url, endpoint);
 

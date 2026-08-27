@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface IncidentRepository extends JpaRepository<IncidentEntity, Long> {
-    boolean existsByEndpointId();
+    boolean existsByEndpointId(Long endpointId);
 
     Optional<IncidentEntity> findByEndpointId(Long endpointId);
 }

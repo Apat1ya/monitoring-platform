@@ -16,7 +16,7 @@ public class IncidentService {
     private final IncidentRepository incidentRepository;
 
     public void openIncident(EndpointHealthState endpointHealthState, CheckResultEvent result) { //todo разобраться как их создавать. Что будет происходить в случае создания
-        if (incidentRepository.existsByEndpointId()){
+        if (incidentRepository.existsByEndpointId(result.endpointId())){
             throw new RuntimeException("Incident already open");
         }
 

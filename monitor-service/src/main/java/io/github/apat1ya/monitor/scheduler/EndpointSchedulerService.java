@@ -1,7 +1,7 @@
 package io.github.apat1ya.monitor.scheduler;
 
-import lombok.RequiredArgsConstructor;
 import io.github.apat1ya.monitor.service.EndpointCheckService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 

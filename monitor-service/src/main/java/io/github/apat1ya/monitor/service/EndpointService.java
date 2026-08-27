@@ -1,7 +1,5 @@
 package io.github.apat1ya.monitor.service;
 
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointActivityDto;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointCreateDto;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointEditDto;
@@ -14,6 +12,8 @@ import io.github.apat1ya.monitor.repository.EndpointRepository;
 import io.github.apat1ya.monitor.scheduler.EndpointSchedulerService;
 import io.github.apat1ya.monitor.service.support.AccessChecker;
 import io.github.apat1ya.monitor.service.support.CurrentUserProvider;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

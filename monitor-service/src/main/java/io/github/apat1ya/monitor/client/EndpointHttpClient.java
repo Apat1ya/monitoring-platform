@@ -1,11 +1,13 @@
 package io.github.apat1ya.monitor.client;
 
-import lombok.RequiredArgsConstructor;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointHttpResponse;
 import io.github.apat1ya.monitor.entity.EndpointEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.time.Instant;
 
 @Component
 @RequiredArgsConstructor
@@ -13,6 +15,7 @@ public class EndpointHttpClient {
     private final WebClient webClient;
 
     public EndpointHttpResponse sendRequest(String url, EndpointEntity endpoint) {
+        Instant checkedAt = Instant.now();
         long start = System.currentTimeMillis();
         try {
             WebClient.RequestBodySpec requestBodySpec = webClient
@@ -33,7 +36,7 @@ public class EndpointHttpClient {
                             responseEntity.getStatusCode().value(),
                             responseEntity.getBody(),
                             System.currentTimeMillis() - start,
-                            start
+                            checkedAt
                     ))
                     .block();
         } catch (Exception e) {
@@ -41,7 +44,7 @@ public class EndpointHttpClient {
                     null,
                     e.getMessage(),
                     System.currentTimeMillis() - start,
-                    start
+                    checkedAt
             );
         }
     }

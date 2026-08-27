@@ -1,9 +1,9 @@
 package io.github.apat1ya.monitor.mapper;
 
-import mapper.MapStructConfig;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointCreateDto;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointResponseDto;
 import io.github.apat1ya.monitor.entity.EndpointEntity;
+import mapper.MapStructConfig;
 import org.mapstruct.Mapper;
 
 @Mapper(config = MapStructConfig.class)
