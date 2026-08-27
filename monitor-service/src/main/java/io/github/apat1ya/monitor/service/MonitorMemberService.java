@@ -1,6 +1,8 @@
 package io.github.apat1ya.monitor.service;
 
 import feign.FeignException;
+import io.github.apat1ya.monitor.exception.MonitorNotFoundException;
+import io.github.apat1ya.monitor.repository.MonitorRepository;
 import lombok.RequiredArgsConstructor;
 import io.github.apat1ya.monitor.client.AuthClient;
 import io.github.apat1ya.monitor.dto.member.MemberRequestDto;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MonitorMemberService {
     private final MemberMonitorRepository memberMonitorRepository;
+    private final MonitorRepository monitorRepository;
     private final CurrentUserProvider userProvider;
     private final AccessChecker accessChecker;
     private final AuthClient authClient;
@@ -34,7 +37,8 @@ public class MonitorMemberService {
         }
         MonitorMember member = new MonitorMember();
         member.setUserId(addedUserId);
-        member.setMonitorId(monitorId);
+        member.setMonitor(monitorRepository.findById(monitorId)
+                .orElseThrow(() -> new MonitorNotFoundException("Monitor not found")));
         member.setRole(requestDto.role());
         memberMonitorRepository.save(member);
         return mapper.toResponse(member);

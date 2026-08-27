@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MonitorRepository extends JpaRepository<MonitorEntity, Long> {
     @Query("""
-            select distinct m from monitor m
-            join monitor_members mm on mm.monitor.id = m.monitorId
+            select distinct m from MonitorEntity m
+            join members mm 
             where mm.userId = :userId
 """)
     Page<MonitorEntity> findAllByUserId(Pageable pageable, Long userId);

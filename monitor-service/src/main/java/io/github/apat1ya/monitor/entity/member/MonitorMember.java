@@ -13,8 +13,8 @@ public class MonitorMember {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
-    @ManyToOne
-    @JoinColumn(name = "monitor_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "monitor", nullable = false)
     private MonitorEntity monitor;
     @Enumerated(EnumType.STRING)
     private Role role;

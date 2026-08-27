@@ -60,7 +60,6 @@ public class MonitorService {
         accessChecker.checkAccessOwner(userProvider.getCurrentUserId(), monitorId);
         MonitorEntity entity = monitorRepository.findById(monitorId)
                 .orElseThrow(() -> new MonitorNotFoundException("Monitor not found by id"));
-        memberRepository.deleteAllByMonitorId(monitorId);
         monitorRepository.delete(entity);
     }
 

@@ -10,7 +10,5 @@ public interface MemberMonitorRepository extends JpaRepository<MonitorMember, Lo
 
     Optional<Role> findRoleByUserIdAndMonitorId(Long currentUserId, Long MonitorId);
 
-    void deleteAllByMonitorId(Long monitorId);
-
     Optional<MonitorMember> findByUserIdAndMonitorId(Long addedUserId, Long monitorId);
 }
