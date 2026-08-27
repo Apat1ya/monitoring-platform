@@ -1,11 +1,11 @@
 package io.github.apat1ya.monitor.entity.member;
 
+import io.github.apat1ya.monitor.entity.MonitorEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "monitor_members")
 @Getter
 @Setter
 public class MonitorMember {
@@ -13,7 +13,9 @@ public class MonitorMember {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
-    private Long monitorId;
+    @ManyToOne
+    @JoinColumn(name = "monitor_id")
+    private MonitorEntity monitor;
     @Enumerated(EnumType.STRING)
     private Role role;
 }
