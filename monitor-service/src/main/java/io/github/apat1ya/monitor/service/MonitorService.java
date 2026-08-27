@@ -25,7 +25,6 @@ public class MonitorService {
     private final MonitorMapper monitorMapper;
     private final CurrentUserProvider userProvider;
     private final AccessChecker accessChecker;
-    private final MemberMonitorRepository memberRepository;
 
     public MonitorResponseDto create(MonitorRequestDto requestDto) {
         validPath(requestDto.target());
