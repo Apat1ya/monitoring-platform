@@ -1,11 +1,13 @@
 package io.github.apat1ya.monitor.service;
 
+import event.EndpointStatusChangedEvent;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointActivityDto;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointCreateDto;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointEditDto;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointResponseDto;
 import io.github.apat1ya.monitor.entity.EndpointEntity;
 import io.github.apat1ya.monitor.entity.EndpointStatus;
+import io.github.apat1ya.monitor.exception.EndpointNotFoundException;
 import io.github.apat1ya.monitor.exception.InvalidPathException;
 import io.github.apat1ya.monitor.mapper.EndpointMapper;
 import io.github.apat1ya.monitor.repository.EndpointRepository;
@@ -100,5 +102,13 @@ public class EndpointService {
         if (!path.startsWith("/")) {
             throw new InvalidPathException("Endpoint path must start with /");
         }
+    }
+
+    public void handle(EndpointStatusChangedEvent event) {
+        EndpointEntity endpoint = endpointRepository.findById(event.endpointId())
+                .orElseThrow(() -> new EndpointNotFoundException("Endpoint not found by id"));
+
+        endpoint.setStatus(EndpointStatus.valueOf(event.status()));
+        endpointRepository.save(endpoint);
     }
 }

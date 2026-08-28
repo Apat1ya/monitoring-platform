@@ -1,0 +1,32 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: incident-service
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+
+    consumer:
+      group-id: incident-service-smoke
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: io.github.apat1ya.common.event
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/incident_db
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+app:
+  kafka:
+    topics:
+      check-results: ${KAFKA_TOPIC_CHECK_RESULTS:monitor.check-results}
+      endpoint-status-changed: ${KAFKA_TOPIC_ ENDPOINT_STATUS_CHANGED:incident.endpoint-status-changed}

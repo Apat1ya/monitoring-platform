@@ -4,3 +4,25 @@ server:
 spring:
   application:
     name: monitor-service
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/monitor_db
+    username: postgres
+    password: postgres
+
+  jpa:
+      hibernate:
+        ddl-auto: update
+
+app:
+  kafka:
+    topics:
+      check-results: ${KAFKA_TOPIC_CHECK_RESULTS:monitor.check-results}
+      endpoint-status-changed: ${KAFKA_TOPIC_ ENDPOINT_STATUS_CHANGED:incident.endpoint-status-changed}

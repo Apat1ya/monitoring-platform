@@ -1,8 +1,10 @@
 package io.github.apat1ya.incident.service;
 
 import event.CheckResultEvent;
+import event.EndpointStatusChangedEvent;
 import io.github.apat1ya.incident.entity.EndpointHealthState;
 import io.github.apat1ya.incident.entity.EndpointStatus;
+import io.github.apat1ya.incident.messaging.producer.EndpointChangedStatusProducer;
 import io.github.apat1ya.incident.repository.EndpointHealthStateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class CheckResultHandler {
     private final EndpointHealthStateRepository endpointHealthStateRepository;
     private final IncidentService incidentService;
-    //todo отправлять ответ сервису монитора про изменение статуса endpoint
+    private final EndpointChangedStatusProducer producer;
 
     private static final int FAILURE_THRESHOLD = 3;
 
@@ -42,6 +44,10 @@ public class CheckResultHandler {
         if (counter == FAILURE_THRESHOLD
                 && endpointHealthState.getStatus() != EndpointStatus.DOWN) {
             endpointHealthState.setStatus(EndpointStatus.DOWN);
+            producer.send(new EndpointStatusChangedEvent(
+                    result.endpointId(),
+                    EndpointStatus.DOWN.toString()
+            ));
             incidentService.openIncident(endpointHealthState, result);
         }
 
@@ -57,6 +63,10 @@ public class CheckResultHandler {
 
         if (endpointHealthState.getStatus() == EndpointStatus.DOWN && counter == 0) {
             endpointHealthState.setStatus(EndpointStatus.UP);
+            producer.send(new EndpointStatusChangedEvent(
+                    result.endpointId(),
+                    EndpointStatus.UP.toString()
+            ));
             incidentService.closeIncident(endpointHealthState);
         }
 
