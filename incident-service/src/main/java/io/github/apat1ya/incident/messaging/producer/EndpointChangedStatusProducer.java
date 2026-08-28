@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EndpointChangedStatusProducer {
     @Value("${app.kafka.topics.endpoint-status-changed}")
-    private final String TOPIC;
+    private String TOPIC;
     private final KafkaTemplate<String, EndpointStatusChangedEvent> kafkaTemplate;
 
     public void send(EndpointStatusChangedEvent event) {

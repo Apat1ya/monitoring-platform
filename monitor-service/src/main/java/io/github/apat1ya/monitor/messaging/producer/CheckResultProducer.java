@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CheckResultProducer {
     @Value("${app.kafka.topics.check-results}")
-    private final String TOPIC;
+    private String TOPIC;
     private final KafkaTemplate<String, CheckResultEvent> kafkaTemplate;
 
     public void send(CheckResultEvent event) {
