@@ -32,7 +32,7 @@ public class EndpointEntity {
     @Column(nullable = false)
     private int checkIntervalSeconds;
     @Column(nullable = false)
-    private int failureThreshold; //TODO в сервисе проверять значения и если null тогда по дефолту ставить значение 3
+    private int failureThreshold;
     @Column(nullable = false)
     private int recoveryThreshold;
     private int failureCounter;

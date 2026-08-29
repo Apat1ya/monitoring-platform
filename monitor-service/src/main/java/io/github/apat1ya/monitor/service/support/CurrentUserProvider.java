@@ -5,6 +5,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CurrentUserProvider {
     public Long getCurrentUserId() {
-        return 1L; //TODO передавать юзера через gateway ?kafka?
+        return 1L; //TODO с монитора кафка будет в этот сервис отправлять и тут consumer будет сюда передавать
     }
 }
