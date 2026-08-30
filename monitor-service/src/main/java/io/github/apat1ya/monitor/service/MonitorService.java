@@ -3,9 +3,12 @@ package io.github.apat1ya.monitor.service;
 import io.github.apat1ya.monitor.dto.monitor.MonitorRequestDto;
 import io.github.apat1ya.monitor.dto.monitor.MonitorResponseDto;
 import io.github.apat1ya.monitor.entity.MonitorEntity;
+import io.github.apat1ya.monitor.entity.member.MonitorMember;
+import io.github.apat1ya.monitor.entity.member.Role;
 import io.github.apat1ya.monitor.exception.InvalidPathException;
 import io.github.apat1ya.monitor.exception.MonitorNotFoundException;
 import io.github.apat1ya.monitor.mapper.MonitorMapper;
+import io.github.apat1ya.monitor.repository.MemberMonitorRepository;
 import io.github.apat1ya.monitor.repository.MonitorRepository;
 import io.github.apat1ya.monitor.service.support.AccessChecker;
 import io.github.apat1ya.monitor.service.support.CurrentUserProvider;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Service;
 public class MonitorService {
     private final MonitorRepository monitorRepository;
     private final MonitorMapper monitorMapper;
+    private final MemberMonitorRepository memberMonitorRepository;
     private final CurrentUserProvider userProvider;
     private final AccessChecker accessChecker;
 
@@ -29,6 +33,13 @@ public class MonitorService {
         validPath(requestDto.target());
         MonitorEntity entity = monitorMapper.toEntity(requestDto);
         entity.setUserId(userProvider.getCurrentUserId());
+
+        MonitorMember owner = new MonitorMember();
+        owner.setMonitor(entity);
+        owner.setRole(Role.OWNER);
+        owner.setUserId(userProvider.getCurrentUserId());
+
+        memberMonitorRepository.save(owner);
         monitorRepository.save(entity);
         return monitorMapper.toResponseDto(entity);
     }
@@ -38,9 +49,7 @@ public class MonitorService {
         validPath(requestDto.target());
         MonitorEntity entity = monitorRepository.findById(monitorId)
                 .orElseThrow(() -> new MonitorNotFoundException("Monitor not found by id"));
-        if (requestDto.target()!=null) {
-            entity.setTarget(requestDto.target());
-        }
+        entity.setTarget(requestDto.target());
         if (requestDto.description()!=null) {
             entity.setDescription(requestDto.description());
         }

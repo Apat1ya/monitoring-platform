@@ -28,4 +28,13 @@ public class AccessChecker {
             throw new NoAccessException("Not enough permissions");
         }
     }
+
+    public void checkAccessView(Long currentUserId, Long monitor) {
+        Role role = memberMonitorRepository
+                .findRoleByUserIdAndMonitorId(currentUserId,monitor)
+                .orElseThrow(() -> new NoAccessException("No access to this monitor"));
+        if (role != Role.VIEW && role != Role.OWNER && role != Role.EDIT) {
+            throw new NoAccessException("Not enough permissions");
+        }
+    }
 }

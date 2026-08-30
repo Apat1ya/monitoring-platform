@@ -30,6 +30,7 @@ public class EndpointService {
     private final EndpointSchedulerService schedulerService;
 
     public Page<EndpointResponseDto> getAll(Long monitorId, Pageable pageable) {
+        accessChecker.checkAccessView(userProvider.getCurrentUserId(), monitorId);
         return endpointRepository.findAllByMonitorId(pageable, monitorId)
                 .map(endpointMapper::toResponseDto);
     }
@@ -75,12 +76,13 @@ public class EndpointService {
         EndpointEntity endpoint = endpointRepository.findByIdAndMonitorId(endpointId, monitorId)
                 .orElseThrow(() -> new EntityNotFoundException("Endpoint not found by id"));
         schedulerService.cancelEndpoint(endpointId);
-        endpointRepository.deleteById(endpointId);
+        endpointRepository.delete(endpoint);
     }
 
     public EndpointResponseDto active(Long monitorId,
                                       Long endpointId,
                                       EndpointActivityDto activityDto) {
+        accessChecker.checkAccessEdit(userProvider.getCurrentUserId(), monitorId);
         EndpointEntity endpoint = endpointRepository.findByIdAndMonitorId(endpointId, monitorId)
                 .orElseThrow(() -> new EntityNotFoundException("Endpoint not found by id"));
         endpoint.setActive(activityDto.active());
