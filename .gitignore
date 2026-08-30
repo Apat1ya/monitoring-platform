@@ -27,3 +27,6 @@ Thumbs.db
 .env.*
 application-local.yml
 application-local.yaml
+
+# secrets for jwt
+.secrets/

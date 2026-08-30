@@ -4,3 +4,7 @@ server:
 spring:
   application:
     name: auth-service
+
+jwt:
+  private-key-location: file:./.secrets/jwt/private.pem
+  public-key-location: file:./.secrets/jwt/public.pem
