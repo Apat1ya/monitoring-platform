@@ -5,6 +5,12 @@ spring:
   application:
     name: monitor-service
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: file:./.secrets/jwt/public.pem
+
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
 
@@ -31,3 +37,4 @@ app:
     topics:
       check-results: ${KAFKA_TOPIC_CHECK_RESULTS:monitor.check-results}
       endpoint-status-changed: ${KAFKA_TOPIC_ ENDPOINT_STATUS_CHANGED:incident.endpoint-status-changed}
+
