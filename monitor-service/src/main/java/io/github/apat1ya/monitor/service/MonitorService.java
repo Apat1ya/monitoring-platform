@@ -39,8 +39,8 @@ public class MonitorService {
         owner.setRole(Role.OWNER);
         owner.setUserId(userProvider.getCurrentUserId());
 
-        memberMonitorRepository.save(owner);
         monitorRepository.save(entity);
+        memberMonitorRepository.save(owner);
         return monitorMapper.toResponseDto(entity);
     }
 

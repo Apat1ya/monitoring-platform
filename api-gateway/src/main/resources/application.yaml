@@ -1,15 +1,20 @@
+server:
+  port: 8084
+
 spring:
   application:
     name: api-gateway
+
   cloud:
     gateway:
       server:
-        webmvc:
+        webflux:
           routes:
             - id: auth-service
               uri: http://localhost:8081
               predicates:
                 - Path=/auth/**
+
             - id: monitor-service
               uri: http://localhost:8082
               predicates:
@@ -19,3 +24,9 @@ spring:
               uri: http://localhost:8083
               predicates:
                 - Path=/incidents/**
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: file:./.secrets/jwt/public.pem

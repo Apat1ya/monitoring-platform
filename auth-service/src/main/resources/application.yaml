@@ -5,6 +5,15 @@ spring:
   application:
     name: auth-service
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth_db
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
 jwt:
   private-key-location: file:./.secrets/jwt/private.pem
   public-key-location: file:./.secrets/jwt/public.pem
