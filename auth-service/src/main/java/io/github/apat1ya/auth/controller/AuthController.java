@@ -1,8 +1,8 @@
 package io.github.apat1ya.auth.controller;
 
+import io.github.apat1ya.auth.dto.AuthResponseDto;
 import io.github.apat1ya.auth.dto.UserLoginRequestDto;
 import io.github.apat1ya.auth.dto.UserRegistrationRequestDto;
-import io.github.apat1ya.auth.dto.AuthResponseDto;
 import io.github.apat1ya.auth.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

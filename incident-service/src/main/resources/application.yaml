@@ -33,4 +33,5 @@ app:
   kafka:
     topics:
       check-results: ${KAFKA_TOPIC_CHECK_RESULTS:monitor.check-results}
-      endpoint-status-changed: ${KAFKA_TOPIC_ ENDPOINT_STATUS_CHANGED:incident.endpoint-status-changed}
+      endpoint-status-changed: ${KAFKA_TOPIC_ENDPOINT_STATUS_CHANGED:incident.endpoint-status-changed}
+      state-changed: ${KAFKA_TOPIC_STATE_CHANGED:incident.state-changed}

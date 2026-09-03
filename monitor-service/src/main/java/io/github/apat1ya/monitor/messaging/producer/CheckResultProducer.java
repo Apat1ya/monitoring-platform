@@ -1,6 +1,6 @@
 package io.github.apat1ya.monitor.messaging.producer;
 
-import event.CheckResultEvent;
+import event.monitor.check.CheckResultEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;

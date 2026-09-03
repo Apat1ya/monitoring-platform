@@ -1,4 +1,4 @@
-package io.github.apat1ya.auth.sequrity.service;
+package io.github.apat1ya.auth.security.service;
 
 import io.github.apat1ya.auth.dto.CustomUserDetails;
 import lombok.RequiredArgsConstructor;

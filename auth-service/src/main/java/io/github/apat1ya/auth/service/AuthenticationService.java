@@ -1,12 +1,14 @@
 package io.github.apat1ya.auth.service;
 
+import event.auth.UserRegisteredEvent;
+import io.github.apat1ya.auth.dto.AuthResponseDto;
 import io.github.apat1ya.auth.dto.UserLoginRequestDto;
 import io.github.apat1ya.auth.dto.UserRegistrationRequestDto;
-import io.github.apat1ya.auth.dto.AuthResponseDto;
 import io.github.apat1ya.auth.entity.UserEntity;
 import io.github.apat1ya.auth.exception.RegistrationException;
+import io.github.apat1ya.auth.messaging.producer.UserRegisteredProducer;
 import io.github.apat1ya.auth.repository.UserRepository;
-import io.github.apat1ya.auth.sequrity.service.JwtService;
+import io.github.apat1ya.auth.security.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +23,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final UserRegisteredProducer registeredProducer;
 
     public void registration(UserRegistrationRequestDto requestDto) {
         if (userRepository.existsByEmail(requestDto.email())) {
@@ -33,6 +36,10 @@ public class AuthenticationService {
         user.setSecondName(requestDto.secondName());
         user.setPassword(passwordEncoder.encode(requestDto.password()));
         userRepository.save(user);
+        registeredProducer.send(new UserRegisteredEvent(
+                user.getId(),
+                user.getEmail()
+        ));
     }
 
     public AuthResponseDto login(UserLoginRequestDto requestDto) {

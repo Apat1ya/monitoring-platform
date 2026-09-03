@@ -1,4 +1,4 @@
-package event;
+package event.monitor.check;
 
 import java.time.Instant;
 

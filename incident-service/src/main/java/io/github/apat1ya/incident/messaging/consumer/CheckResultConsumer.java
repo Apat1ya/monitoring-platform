@@ -1,6 +1,6 @@
 package io.github.apat1ya.incident.messaging.consumer;
 
-import event.CheckResultEvent;
+import event.monitor.check.CheckResultEvent;
 import io.github.apat1ya.incident.service.CheckResultHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;

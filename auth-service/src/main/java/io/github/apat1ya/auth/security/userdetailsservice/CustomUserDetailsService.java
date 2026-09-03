@@ -1,4 +1,4 @@
-package io.github.apat1ya.auth.sequrity.userdetailsservice;
+package io.github.apat1ya.auth.security.userdetailsservice;
 
 import io.github.apat1ya.auth.dto.CustomUserDetails;
 import io.github.apat1ya.auth.entity.UserEntity;

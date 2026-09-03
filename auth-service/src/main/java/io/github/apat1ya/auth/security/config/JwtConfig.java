@@ -1,4 +1,4 @@
-package io.github.apat1ya.auth.sequrity.config;
+package io.github.apat1ya.auth.security.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

@@ -5,6 +5,19 @@ spring:
   application:
     name: auth-service
 
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+
+    consumer:
+      group-id: auth-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JacksonJsonDeserializer
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+
+
   datasource:
     url: jdbc:postgresql://localhost:5432/auth_db
     username: postgres
@@ -17,3 +30,8 @@ spring:
 jwt:
   private-key-location: file:./.secrets/jwt/private.pem
   public-key-location: file:./.secrets/jwt/public.pem
+
+app:
+  kafka:
+    topics:
+      user-registered: ${KAFKA_TOPIC_USER_REGISTERED:auth.user-registered}

@@ -1,6 +1,6 @@
 package io.github.apat1ya.monitor.service;
 
-import event.EndpointStatusChangedEvent;
+import event.incident.EndpointStatusChangedEvent;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointActivityDto;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointCreateDto;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointEditDto;

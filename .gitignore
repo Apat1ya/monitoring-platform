@@ -24,7 +24,6 @@ Thumbs.db
 
 # Local environment / secrets
 .env
-.env.*
 application-local.yml
 application-local.yaml
 

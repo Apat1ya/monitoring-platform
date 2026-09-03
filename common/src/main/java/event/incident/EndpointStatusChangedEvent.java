@@ -1,4 +1,4 @@
-package event;
+package event.incident;
 
 public record EndpointStatusChangedEvent(
         Long endpointId,

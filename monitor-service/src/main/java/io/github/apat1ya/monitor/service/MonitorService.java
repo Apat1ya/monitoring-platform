@@ -1,5 +1,7 @@
 package io.github.apat1ya.monitor.service;
 
+import event.monitor.member.MemberChangeType;
+import event.monitor.member.MonitorMemberChangedEvent;
 import io.github.apat1ya.monitor.dto.monitor.MonitorRequestDto;
 import io.github.apat1ya.monitor.dto.monitor.MonitorResponseDto;
 import io.github.apat1ya.monitor.entity.MonitorEntity;
@@ -8,6 +10,7 @@ import io.github.apat1ya.monitor.entity.member.Role;
 import io.github.apat1ya.monitor.exception.InvalidPathException;
 import io.github.apat1ya.monitor.exception.MonitorNotFoundException;
 import io.github.apat1ya.monitor.mapper.MonitorMapper;
+import io.github.apat1ya.monitor.messaging.producer.NotificationSubscriptionProducer;
 import io.github.apat1ya.monitor.repository.MemberMonitorRepository;
 import io.github.apat1ya.monitor.repository.MonitorRepository;
 import io.github.apat1ya.monitor.service.support.AccessChecker;
@@ -28,6 +31,7 @@ public class MonitorService {
     private final MemberMonitorRepository memberMonitorRepository;
     private final CurrentUserProvider userProvider;
     private final AccessChecker accessChecker;
+    private final NotificationSubscriptionProducer notificationProducer;
 
     public MonitorResponseDto create(MonitorRequestDto requestDto) {
         validPath(requestDto.target());
@@ -41,6 +45,9 @@ public class MonitorService {
 
         monitorRepository.save(entity);
         memberMonitorRepository.save(owner);
+        notificationProducer.sendMemberChangedEvent(
+                new MonitorMemberChangedEvent(owner.getUserId(), entity.getId(), MemberChangeType.ADDED)
+        );
         return monitorMapper.toResponseDto(entity);
     }
 

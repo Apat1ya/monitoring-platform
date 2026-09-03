@@ -1,6 +1,6 @@
 package io.github.apat1ya.monitor.service;
 
-import event.CheckResultEvent;
+import event.monitor.check.CheckResultEvent;
 import io.github.apat1ya.monitor.client.EndpointHttpClient;
 import io.github.apat1ya.monitor.dto.endpoint.EndpointHttpResponse;
 import io.github.apat1ya.monitor.entity.EndpointEntity;

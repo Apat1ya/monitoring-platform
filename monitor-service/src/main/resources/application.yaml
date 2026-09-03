@@ -5,6 +5,13 @@ spring:
   application:
     name: monitor-service
 
+  cloud:
+    openfeign:
+      client:
+        config:
+          auth-service:
+            url: ${AUTH_SERVICE_URL:http://localhost:8081}
+
   security:
     oauth2:
       resourceserver:
@@ -29,12 +36,12 @@ spring:
     password: postgres
 
   jpa:
-      hibernate:
-        ddl-auto: update
+    hibernate:
+      ddl-auto: update
 
 app:
   kafka:
     topics:
       check-results: ${KAFKA_TOPIC_CHECK_RESULTS:monitor.check-results}
-      endpoint-status-changed: ${KAFKA_TOPIC_ ENDPOINT_STATUS_CHANGED:incident.endpoint-status-changed}
-
+      endpoint-status-changed: ${KAFKA_TOPIC_ENDPOINT_STATUS_CHANGED:incident.endpoint-status-changed}
+      notification-subscription: ${KAFKA_TOPIC_NOTIFICATION_SUBSCRIPTION:monitor.notification-subscription}

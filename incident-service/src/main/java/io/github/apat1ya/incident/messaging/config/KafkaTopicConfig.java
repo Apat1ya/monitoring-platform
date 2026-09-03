@@ -16,4 +16,13 @@ public class KafkaTopicConfig {
                 .replicas(1)
                 .build();
     }
+
+    @Bean
+    private NewTopic statusEvent() {
+        return TopicBuilder
+                .name("${app.kafka.topics.state-changed}")
+                .partitions(2)
+                .replicas(1)
+                .build();
+    }
 }

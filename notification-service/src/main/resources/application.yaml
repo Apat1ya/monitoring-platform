@@ -1,0 +1,41 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: notification-service
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: file:./.secrets/jwt/public.pem
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/monitor_db
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+app:
+  kafka:
+    topics:
+      notification-subscription: ${KAFKA_TOPIC_NOTIFICATION_SUBSCRIPTION:monitor.notification-subscription}
+      user-registered: ${KAFKA_TOPIC_USER_REGISTERED:auth.user-registered}
+      state-changed: ${KAFKA_TOPIC_STATE_CHANGED:incident.state-changed}
+
+telegram:
+  bot:
+    token: ${TELEGRAM_BOT_TOKEN}
+    username: ${TELEGRAM_BOT_USERNAME}

@@ -1,5 +1,7 @@
 package io.github.apat1ya.monitor.service;
 
+import event.monitor.member.MemberChangeType;
+import event.monitor.member.MonitorMemberChangedEvent;
 import feign.FeignException;
 import io.github.apat1ya.monitor.client.AuthClient;
 import io.github.apat1ya.monitor.dto.member.MemberRequestDto;
@@ -9,6 +11,7 @@ import io.github.apat1ya.monitor.entity.member.Role;
 import io.github.apat1ya.monitor.exception.MonitorNotFoundException;
 import io.github.apat1ya.monitor.exception.UserNotFoundException;
 import io.github.apat1ya.monitor.mapper.MonitorMemberMapper;
+import io.github.apat1ya.monitor.messaging.producer.NotificationSubscriptionProducer;
 import io.github.apat1ya.monitor.repository.MemberMonitorRepository;
 import io.github.apat1ya.monitor.repository.MonitorRepository;
 import io.github.apat1ya.monitor.service.support.AccessChecker;
@@ -26,12 +29,13 @@ public class MonitorMemberService {
     private final AccessChecker accessChecker;
     private final AuthClient authClient;
     private final MonitorMemberMapper mapper;
+    private final NotificationSubscriptionProducer notificationProducer;
 
     public MemberResponseDto addUser(Long monitorId, MemberRequestDto requestDto) {
         accessChecker.checkAccessOwner(userProvider.getCurrentUserId(),monitorId);
         Long addedUserId;
         try {
-            addedUserId = authClient.checkUser(requestDto.email());
+            addedUserId = authClient.findUserIdByEmail(requestDto.email());
         } catch (FeignException.NotFound ex) {
             throw new UserNotFoundException("User not found by email");
         }
@@ -41,6 +45,9 @@ public class MonitorMemberService {
                 .orElseThrow(() -> new MonitorNotFoundException("Monitor not found")));
         member.setRole(requestDto.role());
         memberMonitorRepository.save(member);
+        notificationProducer.sendMemberChangedEvent(
+                new MonitorMemberChangedEvent(addedUserId, monitorId,MemberChangeType.ADDED)
+        );
         return mapper.toResponse(member);
     }
 
@@ -49,7 +56,7 @@ public class MonitorMemberService {
         accessChecker.checkAccessOwner(userProvider.getCurrentUserId(), monitorId);
         Long targetUserId;
         try {
-            targetUserId = authClient.checkUser(requestDto.email());
+            targetUserId = authClient.findUserIdByEmail(requestDto.email());
         } catch (FeignException.NotFound ex) {
             throw new UserNotFoundException("User not found by email");
         }
@@ -68,13 +75,16 @@ public class MonitorMemberService {
         accessChecker.checkAccessOwner(userProvider.getCurrentUserId(), monitorId);
         Long targetUserId;
         try {
-            targetUserId = authClient.checkUser(requestDto.email());
+            targetUserId = authClient.findUserIdByEmail(requestDto.email());
         } catch (FeignException.NotFound ex) {
             throw new UserNotFoundException("User not found by email");
         }
         MonitorMember member = memberMonitorRepository
                 .findByUserIdAndMonitorId(targetUserId, monitorId)
                 .orElseThrow(() -> new UserNotFoundException("User is not member of this monitor"));
+        notificationProducer.sendMemberChangedEvent(
+                new MonitorMemberChangedEvent(targetUserId, monitorId, MemberChangeType.REMOVED)
+        );
         memberMonitorRepository.delete(member);
     }
 }

@@ -1,12 +1,12 @@
 package io.github.apat1ya.incident.messaging.producer;
 
-import event.EndpointStatusChangedEvent;
+import event.incident.EndpointStatusChangedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class EndpointChangedStatusProducer {
     @Value("${app.kafka.topics.endpoint-status-changed}")

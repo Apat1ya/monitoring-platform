@@ -1,6 +1,6 @@
 package io.github.apat1ya.monitor.messaging.consumer;
 
-import event.EndpointStatusChangedEvent;
+import event.incident.EndpointStatusChangedEvent;
 import io.github.apat1ya.monitor.service.EndpointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
