@@ -20,7 +20,10 @@ public class SecurityConfig {
                         .pathMatchers("/auth/login",
                                 "/auth/registration",
                                 "/swagger-ui/**",
-                                "/v3/api-docs/**").permitAll()
+                                "/v3/api-docs/**",
+                                "/auth/**",
+                                "/actuator/health",
+                                "/actuator/health/**").permitAll()
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth ->
