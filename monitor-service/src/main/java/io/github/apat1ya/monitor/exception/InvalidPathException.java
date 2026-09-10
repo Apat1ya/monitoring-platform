@@ -1,6 +1,7 @@
 package io.github.apat1ya.monitor.exception;
 
 public class InvalidPathException extends RuntimeException {
-    public InvalidPathException(String s) {
+    public InvalidPathException(String message) {
+        super(message);
     }
 }

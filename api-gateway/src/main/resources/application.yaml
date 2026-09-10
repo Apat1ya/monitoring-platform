@@ -15,11 +15,12 @@ spring:
       server:
         webflux:
           routes:
-            - id: auth-rate-limited
+
+            - id: auth-service
               uri: http://localhost:8081
               order: -1
               predicates:
-                - Path=/auth/login,/auth/register
+                - Path=/auth/login,/auth/registration
               filters:
                 - name: RequestRateLimiter
                   args:
@@ -27,15 +28,21 @@ spring:
                     redis-rate-limiter.replenishRate: 1
                     redis-rate-limiter.burstCapacity: 5
                     redis-rate-limiter.requestedTokens: 1
-            - id: auth-service
-              uri: http://localhost:8081
-              predicates:
-                - Path=/auth/**
+
+                - name: CircuitBreaker
+                  args:
+                    name: authCircuitBreaker
+                    fallbackUri: forward:/fallback/auth
 
             - id: monitor-service
               uri: http://localhost:8082
               predicates:
                 - Path=/monitors/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: monitorCircuitBreaker
+                    fallbackUri: forward:/fallback/monitor
 
             - id: incident-service
               uri: http://localhost:8083
@@ -48,8 +55,51 @@ spring:
         jwt:
           public-key-location: file:./.secrets/jwt/public.pem
 
+
 management:
+  endpoints:
+    web:
+      exposure:
+        include: health,circuitbreakers
+
   endpoint:
     health:
       show-details: always
       show-components: always
+
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 5
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 2
+
+    instances:
+      authCircuitBreaker:
+        baseConfig: default
+
+      monitorCircuitBreaker:
+        baseConfig: default
+
+      incidentCircuitBreaker:
+        baseConfig: default
+
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 3s
+
+    instances:
+      authCircuitBreaker:
+        baseConfig: default
+
+      monitorCircuitBreaker:
+        baseConfig: default
+
+      incidentCircuitBreaker:
+        baseConfig: default
