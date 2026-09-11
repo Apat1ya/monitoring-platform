@@ -3,7 +3,7 @@ package io.github.apat1ya.auth.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public record UserLoginRequestDto(
+public record ChangeEmailRequest(
         @Email
         String email,
         @NotBlank
