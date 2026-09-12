@@ -14,7 +14,7 @@ public class EmailService {
     private String confirmUrl;
 
     public void sendEmailChangeConfirmation(String email, String token) {
-        String link = confirmUrl + "?token" + token;
+        String link = confirmUrl + "?token=" + token;
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(email);

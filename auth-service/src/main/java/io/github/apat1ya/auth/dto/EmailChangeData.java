@@ -5,6 +5,6 @@ import jakarta.validation.constraints.Email;
 public record EmailChangeData(
         Long userId,
         @Email
-        String email
+        String newEmail
 ) {
 }

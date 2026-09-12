@@ -26,11 +26,11 @@ public class UserController {
                 .body("Confirmation newEmail has been sent");
     }
 
-    @PostMapping("/email/change/confirm")
+    @PostMapping("/newEmail/change/confirm")
     public ResponseEntity<String> confirmEmailChange (@RequestBody ConfirmEmailChangeRequest changeRequest) {
-        userService.confirmEmailChangeRequest(changeRequest.token());
+        userService.confirmEmailChange(changeRequest.token());
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
+                .status(HttpStatus.OK)
                 .body("Email successfully changed");
     }
 }

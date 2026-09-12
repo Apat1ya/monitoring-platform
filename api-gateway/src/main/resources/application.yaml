@@ -16,7 +16,7 @@ spring:
         webflux:
           routes:
 
-            - id: auth-service
+            - id: auth-public
               uri: http://localhost:8081
               order: -1
               predicates:
@@ -29,6 +29,16 @@ spring:
                     redis-rate-limiter.burstCapacity: 5
                     redis-rate-limiter.requestedTokens: 1
 
+                - name: CircuitBreaker
+                  args:
+                    name: authCircuitBreaker
+                    fallbackUri: forward:/fallback/auth
+
+            - id: auth-user
+              uri: http://localhost:8081
+              predicates:
+                - Path=/user/me/**
+              filters:
                 - name: CircuitBreaker
                   args:
                     name: authCircuitBreaker

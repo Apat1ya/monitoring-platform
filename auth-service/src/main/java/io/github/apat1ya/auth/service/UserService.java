@@ -1,6 +1,7 @@
 package io.github.apat1ya.auth.service;
 
 import event.auth.EmailChangeRequestedEvent;
+import event.auth.UserEmailChangedEvent;
 import io.github.apat1ya.auth.dto.ChangeEmailRequest;
 import io.github.apat1ya.auth.dto.EmailChangeData;
 import io.github.apat1ya.auth.entity.UserEntity;
@@ -9,6 +10,7 @@ import io.github.apat1ya.auth.exception.InvalidEmailChangeException;
 import io.github.apat1ya.auth.exception.InvalidPasswordException;
 import io.github.apat1ya.auth.exception.UserNotFoundException;
 import io.github.apat1ya.auth.messaging.producer.ChangeEmailProducer;
+import io.github.apat1ya.auth.messaging.producer.UserEmailChangedProducer;
 import io.github.apat1ya.auth.repository.UserRepository;
 import io.github.apat1ya.auth.service.support.CurrentUserProvider;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class UserService {
     private final CurrentUserProvider currentUser;
     private final PasswordEncoder passwordEncoder;
     private final ChangeEmailProducer producer;
+    private final UserEmailChangedProducer userEmailChangedProducer;
     private final RedisTemplate<String, EmailChangeData> redisTemplate;
     private static final Duration TOKEN_TTL = Duration.ofMinutes(10);
     private static final SecureRandom SECURE_RANDOM = new SecureRandom();
@@ -56,7 +59,7 @@ public class UserService {
         );
 
         redisTemplate.opsForValue().set(
-                "email-change:" + token,
+                "newEmail-change:" + token,
                 data,
                 TOKEN_TTL
         );
@@ -68,8 +71,8 @@ public class UserService {
         ));
     }
 
-    public void confirmEmailChangeRequest(String token) {
-        String key = "email-change:" + token;
+    public void confirmEmailChange(String token) {
+        String key = "newEmail-change:" + token;
 
         EmailChangeData data = redisTemplate.opsForValue().get(key);
 
@@ -80,9 +83,13 @@ public class UserService {
         UserEntity user = userRepository.findById(data.userId())
                 .orElseThrow(() -> new UserNotFoundException("User not found by id"));
 
-        user.setEmail(data.email());
+        user.setEmail(data.newEmail());
         userRepository.save(user);
 
+        userEmailChangedProducer.send(new UserEmailChangedEvent(
+                data.userId(),
+                data.newEmail()
+        ) );
         redisTemplate.delete(key);
     }
 

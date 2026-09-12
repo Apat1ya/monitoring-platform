@@ -16,5 +16,23 @@ public class KafkaTopicConfig {
                 .replicas(1)
                 .build();
     }
+
+    @Bean
+    public NewTopic changeEmailTopic() {
+        return TopicBuilder
+                .name("${app.kafka.topics.user-newEmail-changed}")
+                .partitions(2)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic userEmailChangeRequestTopic() {
+        return TopicBuilder
+                .name("${app.kafka.topics.newEmail-change}")
+                .partitions(2)
+                .replicas(1)
+                .build();
+    }
 }
 
