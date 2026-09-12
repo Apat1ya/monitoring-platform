@@ -2,6 +2,7 @@ package io.github.apat1ya.notification.service;
 
 import event.auth.UserRegisteredEvent;
 import io.github.apat1ya.notification.entity.NotificationUser;
+import io.github.apat1ya.notification.exception.UserNotFound;
 import io.github.apat1ya.notification.repository.NotificationUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,13 @@ public class NotificationUserService {
         NotificationUser user = new NotificationUser();
         user.setUserId(userRegisteredEvent.userId());
         user.setEmail(userRegisteredEvent.email());
+        userRepository.save(user);
+    }
+
+    public void changeUserEmail(Long userId, String email) {
+        NotificationUser user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UserNotFound("User not found"));
+        user.setEmail(email);
         userRepository.save(user);
     }
 }

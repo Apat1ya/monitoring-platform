@@ -27,7 +27,7 @@ public class AuthenticationService {
 
     public void registration(UserRegistrationRequestDto requestDto) {
         if (userRepository.existsByEmail(requestDto.email())) {
-            throw new RegistrationException("User with email" + requestDto.email()
+            throw new RegistrationException("User with newEmail" + requestDto.email()
                     + "already exist");
         }
         UserEntity user = new UserEntity();

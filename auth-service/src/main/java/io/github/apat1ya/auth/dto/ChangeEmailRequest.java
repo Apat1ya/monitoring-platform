@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public record ChangeEmailRequest(
         @Email
-        String email,
+        String newEmail,
         @NotBlank
         String password
 ) {

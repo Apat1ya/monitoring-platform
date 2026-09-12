@@ -22,7 +22,7 @@ public class JwtService {
         Instant now = Instant.now();
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .subject(user.id().toString())
-                .claim("email", user.email())
+                .claim("newEmail", user.email())
                 .issuedAt(now)
                 .expiresAt(now.plus(Duration.ofMinutes(20)))
                 .issuer("auth-service")

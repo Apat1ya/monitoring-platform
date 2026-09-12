@@ -5,6 +5,11 @@ spring:
   application:
     name: auth-service
 
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
 
@@ -35,3 +40,5 @@ app:
   kafka:
     topics:
       user-registered: ${KAFKA_TOPIC_USER_REGISTERED:auth.user-registered}
+      email-change: ${KAFKA_TOPIC_EMAIL_CHANGE:auth.email-change}
+      user-email-changed: ${KAFKA_TOPIC_EMAIL_CHANGE:auth.user-email-changed}

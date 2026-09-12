@@ -12,7 +12,7 @@ public record UserRegistrationRequestDto(
         String firstName,
         @Size(max = 25)
         String secondName,
-        @Email(message = "Field email can`t be empty")
+        @Email(message = "Field newEmail can`t be empty")
         String email,
         @NotBlank(message = "Field password can`t be empty")
         @Size(min = 8, max = 25)
