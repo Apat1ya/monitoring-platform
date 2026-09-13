@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class UserEmailChangedProducer {
-    @Value("${app.kafka.topics.user-newEmail-changed}")
+    @Value("${app.kafka.topics.user-email-changed}")
     private String TOPIC;
     private final KafkaTemplate<String, UserEmailChangedEvent> kafkaTemplate;
 

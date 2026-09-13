@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/email-change/confirm")
-    public ResponseEntity<String> confirmEmailChange (@RequestBody ConfirmEmailChangeRequest changeRequest) {
+    public ResponseEntity<String> confirmEmailChange (@RequestBody @Valid ConfirmEmailChangeRequest changeRequest) {
         userService.confirmEmailChange(changeRequest.token());
         return ResponseEntity
                 .status(HttpStatus.OK)

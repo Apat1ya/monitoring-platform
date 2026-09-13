@@ -29,7 +29,7 @@ public class MonitorController {
 
     @PatchMapping("/edit/{monitorId}")
     public MonitorResponseDto update(@PathVariable Long monitorId
-            ,@RequestBody MonitorRequestDto requestDto) {
+            ,@RequestBody @Valid MonitorRequestDto requestDto) {
         return monitorService.update(monitorId, requestDto);
     }
 

@@ -58,6 +58,10 @@ spring:
               uri: http://localhost:8083
               predicates:
                 - Path=/incidents/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: incidentCircuitBreaker
 
   security:
     oauth2:
