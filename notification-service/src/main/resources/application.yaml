@@ -46,11 +46,11 @@ app:
       notification-subscription: ${KAFKA_TOPIC_NOTIFICATION_SUBSCRIPTION:monitor.notification-subscription}
       user-registered: ${KAFKA_TOPIC_USER_REGISTERED:auth.user-registered}
       state-changed: ${KAFKA_TOPIC_STATE_CHANGED:incident.state-changed}
-      email-change: ${KAFKA_TOPIC_EMAIL_CHANGE:auth.email-change}
+      email-change-requested: ${KAFKA_TOPIC_EMAIL_CHANGE:auth.email-change-requested}
       user-email-changed: ${KAFKA_TOPIC_USER_EMAIL_CHANGED:auth.user-email-changed}
 
   email:
-    confirm-url: ${EMAIL_CONFIRM_URL:http://localhost:8080/users/email/confirm}
+    confirm-url: ${EMAIL_CONFIRM_URL:http://localhost:8084/users/email/confirm}
 
 telegram:
   bot:

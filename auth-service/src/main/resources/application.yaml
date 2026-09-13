@@ -40,5 +40,5 @@ app:
   kafka:
     topics:
       user-registered: ${KAFKA_TOPIC_USER_REGISTERED:auth.user-registered}
-      email-change: ${KAFKA_TOPIC_EMAIL_CHANGE:auth.newEmail-change}
+      email-change-requested: ${KAFKA_TOPIC_EMAIL_CHANGE:auth.email-change-requested}
       user-email-changed: ${KAFKA_TOPIC_USER_EMAIL_CHANGED:auth.user-newEmail-changed}

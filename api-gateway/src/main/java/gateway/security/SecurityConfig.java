@@ -23,7 +23,9 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/auth/**",
                                 "/actuator/health",
-                                "/actuator/health/**").permitAll()
+                                "/actuator/health/**",
+                                "/user/me/email-change/confirm"
+                        ).permitAll()
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth ->

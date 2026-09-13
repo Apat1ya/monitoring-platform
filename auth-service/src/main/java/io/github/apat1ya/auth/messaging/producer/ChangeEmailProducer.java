@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ChangeEmailProducer {
-    @Value("${app.kafka.topics.newEmail-change}")
+    @Value("${app.kafka.topics.email-change-requested}")
     private String TOPIC;
     private final KafkaTemplate<String, EmailChangeRequestedEvent> kafkaTemplate;
 

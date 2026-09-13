@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/change-newEmail")
+    @PostMapping("/email-change")
     public ResponseEntity<String> changeEmail(@Valid @RequestBody ChangeEmailRequest emailRequest) {
         userService.requestEmailChange(emailRequest);
         return ResponseEntity
@@ -26,7 +26,7 @@ public class UserController {
                 .body("Confirmation newEmail has been sent");
     }
 
-    @PostMapping("/newEmail/change/confirm")
+    @PostMapping("/email-change/confirm")
     public ResponseEntity<String> confirmEmailChange (@RequestBody ConfirmEmailChangeRequest changeRequest) {
         userService.confirmEmailChange(changeRequest.token());
         return ResponseEntity

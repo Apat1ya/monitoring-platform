@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class ChangeEmailConsumer {
     private final EmailService emailService;
 
-    @KafkaListener(topics = "${app.kafka.topics.email-change}")
+    @KafkaListener(topics = "${app.kafka.topics.email-change-requested}")
     public void consume(EmailChangeRequestedEvent event) {
         emailService.sendEmailChangeConfirmation(
                 event.newEmail(),
