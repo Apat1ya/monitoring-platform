@@ -1,6 +1,6 @@
 package io.github.apat1ya.notification.service;
 
-import event.auth.UserRegisteredEvent;
+import io.github.apat1ya.common.event.auth.UserRegisteredEvent;
 import io.github.apat1ya.notification.entity.NotificationUser;
 import io.github.apat1ya.notification.exception.UserNotFound;
 import io.github.apat1ya.notification.repository.NotificationUserRepository;

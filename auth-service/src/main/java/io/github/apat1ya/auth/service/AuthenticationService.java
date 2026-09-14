@@ -1,6 +1,6 @@
 package io.github.apat1ya.auth.service;
 
-import event.auth.UserRegisteredEvent;
+import io.github.apat1ya.common.event.auth.UserRegisteredEvent;
 import io.github.apat1ya.auth.dto.AuthResponseDto;
 import io.github.apat1ya.auth.dto.UserLoginRequestDto;
 import io.github.apat1ya.auth.dto.UserRegistrationRequestDto;
@@ -27,7 +27,7 @@ public class AuthenticationService {
 
     public void registration(UserRegistrationRequestDto requestDto) {
         if (userRepository.existsByEmail(requestDto.email())) {
-            throw new RegistrationException("User with newEmail" + requestDto.email()
+            throw new RegistrationException("User with email" + requestDto.email()
                     + "already exist");
         }
         UserEntity user = new UserEntity();

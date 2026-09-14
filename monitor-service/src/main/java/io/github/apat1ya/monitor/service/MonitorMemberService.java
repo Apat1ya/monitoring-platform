@@ -1,7 +1,7 @@
 package io.github.apat1ya.monitor.service;
 
-import event.monitor.member.MemberChangeType;
-import event.monitor.member.MonitorMemberChangedEvent;
+import io.github.apat1ya.common.event.monitor.member.MemberChangeType;
+import io.github.apat1ya.common.event.monitor.member.MonitorMemberChangedEvent;
 import feign.FeignException;
 import io.github.apat1ya.monitor.client.AuthClient;
 import io.github.apat1ya.monitor.dto.member.MemberRequestDto;

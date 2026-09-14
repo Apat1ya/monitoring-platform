@@ -1,4 +1,4 @@
-package event.monitor.check;
+package io.github.apat1ya.common.event.monitor.check;
 
 import java.time.Instant;
 

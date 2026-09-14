@@ -18,7 +18,7 @@ public class KafkaTopicConfig {
     }
 
     @Bean
-    private NewTopic statusEvent() {
+    public NewTopic statusEvent() {
         return TopicBuilder
                 .name("${app.kafka.topics.state-changed}")
                 .partitions(2)

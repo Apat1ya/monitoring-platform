@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InternalUserController {
     private final UserService userService;
 
-    @GetMapping("/internal/users/by-newEmail")
+    @GetMapping("/internal/users/by-email")
     public Long findUserIdByEmail(@RequestParam String email) {
         return userService.findUserIdByEmail(email);
     }

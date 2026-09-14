@@ -4,18 +4,20 @@ server:
 spring:
   application:
     name: notification-service
+  config:
+    import: optional:file:.env[.properties]
 
   mail:
-    host: smtp.gmail.com
-    port: 587
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:
-          auth: true
+          auth: false
           starttls:
-            enable: true
+            enable: false
 
   data:
     redis:
@@ -34,9 +36,11 @@ spring:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
 
     consumer:
-      group-id: monitor-service
+      group-id: notification-service
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JacksonJsonDeserializer
+      properties:
+        spring.json.trusted.packages: "io.github.apat1ya.common.event.auth"
 
   datasource:
     url: jdbc:postgresql://localhost:5432/monitor_db

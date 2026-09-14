@@ -1,5 +1,13 @@
 services:
 
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit
+    restart: unless-stopped
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
   broker:
     image: apache/kafka:4.3.1
 

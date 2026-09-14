@@ -1,6 +1,6 @@
 package io.github.apat1ya.notification.telegram;
 
-import event.incident.StateChangedEvent;
+import io.github.apat1ya.common.event.incident.StateChangedEvent;
 import io.github.apat1ya.notification.exception.TelegramNotificationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

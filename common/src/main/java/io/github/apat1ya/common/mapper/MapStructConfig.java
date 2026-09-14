@@ -1,4 +1,4 @@
-package mapper;
+package io.github.apat1ya.common.mapper;
 
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.NullValueCheckStrategy;

@@ -1,7 +1,7 @@
 package io.github.apat1ya.notification.service;
 
-import event.monitor.member.MemberChangeType;
-import event.monitor.member.MonitorMemberChangedEvent;
+import io.github.apat1ya.common.event.monitor.member.MemberChangeType;
+import io.github.apat1ya.common.event.monitor.member.MonitorMemberChangedEvent;
 import io.github.apat1ya.notification.entity.NotificationSubscription;
 import io.github.apat1ya.notification.exception.SubscriptionNotFound;
 import io.github.apat1ya.notification.repository.NotificationSubscriptionRepository;

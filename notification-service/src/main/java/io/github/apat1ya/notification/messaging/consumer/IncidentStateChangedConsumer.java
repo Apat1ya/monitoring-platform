@@ -1,6 +1,6 @@
 package io.github.apat1ya.notification.messaging.consumer;
 
-import event.incident.StateChangedEvent;
+import io.github.apat1ya.common.event.incident.StateChangedEvent;
 import io.github.apat1ya.notification.repository.NotificationSubscriptionRepository;
 import io.github.apat1ya.notification.telegram.TelegramSender;
 import lombok.RequiredArgsConstructor;

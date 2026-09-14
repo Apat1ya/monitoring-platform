@@ -1,6 +1,6 @@
 package io.github.apat1ya.notification.messaging.consumer;
 
-import event.auth.UserEmailChangedEvent;
+import io.github.apat1ya.common.event.auth.UserEmailChangedEvent;
 import io.github.apat1ya.notification.service.NotificationUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;

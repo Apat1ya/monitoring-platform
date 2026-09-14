@@ -1,7 +1,7 @@
 package io.github.apat1ya.monitor.service;
 
-import event.monitor.member.MemberChangeType;
-import event.monitor.member.MonitorMemberChangedEvent;
+import io.github.apat1ya.common.event.monitor.member.MemberChangeType;
+import io.github.apat1ya.common.event.monitor.member.MonitorMemberChangedEvent;
 import io.github.apat1ya.monitor.dto.monitor.MonitorRequestDto;
 import io.github.apat1ya.monitor.dto.monitor.MonitorResponseDto;
 import io.github.apat1ya.monitor.entity.MonitorEntity;

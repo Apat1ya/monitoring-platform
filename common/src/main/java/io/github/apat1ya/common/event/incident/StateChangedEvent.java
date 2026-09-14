@@ -1,4 +1,4 @@
-package event.incident;
+package io.github.apat1ya.common.event.incident;
 
 import java.time.Instant;
 

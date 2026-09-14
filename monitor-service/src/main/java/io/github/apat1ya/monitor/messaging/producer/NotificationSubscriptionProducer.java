@@ -1,6 +1,6 @@
 package io.github.apat1ya.monitor.messaging.producer;
 
-import event.monitor.member.MonitorMemberChangedEvent;
+import io.github.apat1ya.common.event.monitor.member.MonitorMemberChangedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;

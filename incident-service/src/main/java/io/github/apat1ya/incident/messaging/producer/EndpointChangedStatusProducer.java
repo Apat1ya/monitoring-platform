@@ -1,6 +1,6 @@
 package io.github.apat1ya.incident.messaging.producer;
 
-import event.incident.EndpointStatusChangedEvent;
+import io.github.apat1ya.common.event.incident.EndpointStatusChangedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;

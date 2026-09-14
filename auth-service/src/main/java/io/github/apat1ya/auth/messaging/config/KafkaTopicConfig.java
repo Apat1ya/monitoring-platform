@@ -20,7 +20,7 @@ public class KafkaTopicConfig {
     @Bean
     public NewTopic changeEmailTopic() {
         return TopicBuilder
-                .name("${app.kafka.topics.user-newEmail-changed}")
+                .name("${app.kafka.topics.user-email-changed}")
                 .partitions(2)
                 .replicas(1)
                 .build();
@@ -29,7 +29,7 @@ public class KafkaTopicConfig {
     @Bean
     public NewTopic userEmailChangeRequestTopic() {
         return TopicBuilder
-                .name("${app.kafka.topics.newEmail-change}")
+                .name("${app.kafka.topics.email-change}")
                 .partitions(2)
                 .replicas(1)
                 .build();

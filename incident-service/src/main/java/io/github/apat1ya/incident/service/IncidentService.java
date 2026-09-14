@@ -1,6 +1,6 @@
 package io.github.apat1ya.incident.service;
 
-import event.monitor.check.CheckResultEvent;
+import io.github.apat1ya.common.event.monitor.check.CheckResultEvent;
 import io.github.apat1ya.incident.entity.EndpointHealthState;
 import io.github.apat1ya.incident.entity.IncidentEntity;
 import io.github.apat1ya.incident.entity.Status;

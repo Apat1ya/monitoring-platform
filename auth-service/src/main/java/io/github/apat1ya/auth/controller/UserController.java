@@ -23,7 +23,7 @@ public class UserController {
         userService.requestEmailChange(emailRequest);
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)
-                .body("Confirmation newEmail has been sent");
+                .body("Confirmation email has been sent");
     }
 
     @PostMapping("/email-change/confirm")

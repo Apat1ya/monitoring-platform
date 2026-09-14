@@ -1,6 +1,6 @@
 package io.github.apat1ya.auth.messaging.producer;
 
-import event.auth.UserEmailChangedEvent;
+import io.github.apat1ya.common.event.auth.UserEmailChangedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
