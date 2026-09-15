@@ -14,7 +14,7 @@ public class ChangeEmailConsumer {
     @KafkaListener(topics = "${app.kafka.topics.email-change-requested}")
     public void consume(EmailChangeRequestedEvent event) {
         emailService.sendEmailChangeConfirmation(
-                event.newEmail(),
+                event.email(),
                 event.token()
         );
     }
